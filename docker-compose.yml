@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    container_name: stepanov_work
+    ports:
+      - 15432:5432
