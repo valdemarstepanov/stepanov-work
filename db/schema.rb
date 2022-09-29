@@ -19,23 +19,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_141831) do
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "profile_id"
-    t.index ["profile_id"], name: "index_grades_on_profile_id"
+    t.index ["name"], name: "index_grades_on_name"
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.bigint "speciality_id"
+    t.bigint "grade_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["grade_id"], name: "index_profiles_on_grade_id"
+    t.index ["speciality_id"], name: "index_profiles_on_speciality_id"
   end
 
   create_table "specialities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "profile_id"
-    t.index ["profile_id"], name: "index_specialities_on_profile_id"
+    t.index ["name"], name: "index_specialities_on_name"
   end
 
   create_table "users", force: :cascade do |t|

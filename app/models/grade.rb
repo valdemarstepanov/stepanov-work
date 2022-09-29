@@ -1,6 +1,6 @@
 class Grade < ApplicationRecord
 
-    belongs_to :profile
+    has_one :profile
 
     validates :name, uniqueness: true
 

@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
 
-    has_one :speciality, dependent: :destroy
-    has_one :grade, dependent: :destroy
+    belongs_to :speciality
+    belongs_to :grade
 
 end

@@ -1,7 +1,7 @@
 class Speciality < ApplicationRecord
 
-  belongs_to :profile
+  has_one :profile
 
-  validates :name, length: { maximum: 25 }, uniqueness: true
+  validates :name, length: { maximum: 255 }, uniqueness: true
 
 end
