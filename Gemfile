@@ -8,6 +8,8 @@ gem "rails", "~> 7.0.4"
 
 gem "devise"
 
+gem "tailwindcss-rails"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -74,4 +76,7 @@ group :test do
   gem "rspec-rails"
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
+  gem 'ffaker'
+  gem 'database_cleaner'
 end
