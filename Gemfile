@@ -10,6 +10,8 @@ gem "devise"
 
 gem "tailwindcss-rails"
 
+gem "rolify"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
