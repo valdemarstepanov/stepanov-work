@@ -6,10 +6,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-class User < ActiveRecord::Base
-    after_create :assign_default_role
-  
-    def assign_default_role
-      self.add_role(:admin) if self.roles.blank?
-    end
-end
+user = User.new
+user.email = 'user@gmail.com'
+user.password = '123456'
+user.add_role :admin
+user.save
