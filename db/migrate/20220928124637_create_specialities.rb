@@ -5,5 +5,8 @@ class CreateSpecialities < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :specialities, :name
+
   end
 end
