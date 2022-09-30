@@ -11,3 +11,5 @@ user.email = 'user@gmail.com'
 user.password = '123456'
 user.add_role :admin
 user.save
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
