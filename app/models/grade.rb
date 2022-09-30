@@ -1,6 +1,6 @@
 class Grade < ApplicationRecord
 
-    has_one :profile
+    has_many :profile
 
     validates :name, uniqueness: true
 

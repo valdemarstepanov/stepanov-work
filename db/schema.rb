@@ -53,10 +53,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
     t.string "last_name", null: false
     t.bigint "speciality_id"
     t.bigint "grade_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["grade_id"], name: "index_profiles_on_grade_id"
     t.index ["speciality_id"], name: "index_profiles_on_speciality_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -98,4 +100,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
 
   add_foreign_key "profiles", "grades"
   add_foreign_key "profiles", "specialities"
+  add_foreign_key "profiles", "users"
 end
