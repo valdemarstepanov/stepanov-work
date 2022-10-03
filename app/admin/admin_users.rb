@@ -17,7 +17,7 @@ ActiveAdmin.register AdminUser do
   filter :created_at
 
   # show do
-  #   attributes_table :id, :email, :created_at, :updated_at 
+  #   attributes_table :id, :email, :created_at, :updated_at
   # end
 
   form do |f|
