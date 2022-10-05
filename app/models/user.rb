@@ -6,11 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :email, uniqueness: true
-  validates :roles, presence: true  
+  # validates :roles, presence: true
 
   has_one :profile
-
-  # accepts_nested_attributes_for :profile
 
   before_create :assign_role
 
