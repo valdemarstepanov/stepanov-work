@@ -2,8 +2,7 @@ class Profile < ApplicationRecord
 
     belongs_to :speciality
     belongs_to :grade
-    belongs_to :user
+    belongs_to :user, dependent: :destroy
 
-    accepts_nested_attributes_for :speciality, :grade, :user
-    validates :first_name, :last_name, :user_id, presence: true
+    validates :first_name, :last_name, :grade_id, :speciality_id, presence: true
 end
