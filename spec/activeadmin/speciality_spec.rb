@@ -37,7 +37,7 @@ RSpec.describe 'Speciality', :js, type: :feature do
     end
   
 
-    scenario 'destroy grade' do
+    scenario 'destroy speciality' do
         sign_in(admin_user)
     
         visit admin_specialities_path
