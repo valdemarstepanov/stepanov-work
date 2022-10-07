@@ -1,0 +1,3 @@
+class SpecialitysController < ApplicationController
+
+end

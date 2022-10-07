@@ -8,6 +8,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'spec_helper'
 require 'database_cleaner'
+require 'helpers/sign_in.rb'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -67,20 +69,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-end
-
-def sign_in(user)
-  within('form') do
-    visit user_session_path
-      fill_in 'Email address', with: user.email
-      fill_in 'Password', with: user.password
-    click_button 'Sign in'
-  end
-end
-
-def sign_in(admin_user)
-  visit admin_user_session_path
-    fill_in 'admin_user_email', with: admin_user.email
-    fill_in 'admin_user_password', with: admin_user.password
-  click_button 'Login'
 end

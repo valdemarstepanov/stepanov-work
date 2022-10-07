@@ -45,4 +45,18 @@ ActiveAdmin.register User do
     end
     f.actions
   end
+
+  action_item only: :index do
+    link_to 'Import Users to CSV', '#'
+  end
+
+  csv do
+    column(:First_name) { |user| user.profile.first_name }
+    column(:Last_name) { |user| user.profile.last_name }
+    column(:Grade_name) { |user| user.profile.grade.name }
+    column(:Grade_level) { |user| user.profile.grade.level }
+    column(:Speciality) { |user| user.profile.speciality }
+    column :email
+    column :roles
+  end
 end
