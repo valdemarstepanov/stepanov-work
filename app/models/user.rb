@@ -11,10 +11,10 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
 
-  before_create :assign_role
+  # before_create :assign_role
 
-  def assign_role
-    self.add_role :user if self.roles.first.nil?
-  end
+  # def assign_role
+  #   self.add_role :user if self.roles.first.nil?
+  # end
 
 end

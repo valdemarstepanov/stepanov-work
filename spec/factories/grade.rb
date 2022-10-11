@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :grade do
-      name                    { FFaker::Name.unique.name }
-      level                   { FFaker::Name.unique.name }
+      name                    { 'trainee' }
+      level                   { 'D0' }
     end
 end

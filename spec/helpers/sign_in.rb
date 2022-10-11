@@ -1,14 +1,5 @@
 require "spec_helper"
-
-def sign_in(user)
-  within('form') do
-    visit user_session_path
-      fill_in 'Email address', with: user.email
-      fill_in 'Password', with: user.password
-    click_button 'Sign in'
-  end
-end
-  
+ 
 def sign_in(admin_user)
   visit admin_user_session_path
     fill_in 'admin_user_email', with: admin_user.email
