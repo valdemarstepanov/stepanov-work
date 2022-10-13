@@ -18,7 +18,9 @@ gem "rolify"
 
 gem 'kaminari'
 
-gem 'pry'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+gem 'dotenv-rails'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -67,6 +69,8 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 
   gem "bullet"
+
+  gem 'pry'
 end
 
 group :development do
