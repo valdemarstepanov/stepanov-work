@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_13_161307) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_14_082756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,11 +48,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_161307) do
     t.index ["name"], name: "index_grades_on_name"
   end
 
+  create_table "pool_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id", null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations", null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "pool_anc_desc_idx", unique: true
+    t.index ["descendant_id"], name: "pool_desc_idx"
+  end
+
   create_table "pools", force: :cascade do |t|
     t.string "type"
     t.bigint "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "parent_id"
     t.index ["profile_id"], name: "index_pools_on_profile_id"
   end
 
