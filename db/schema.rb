@@ -103,5 +103,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
 >>>>>>> 4f3feaeda8f585b0634da1d8505268a3668d462b
   add_foreign_key "profiles", "grades"
   add_foreign_key "profiles", "specialities"
-  add_foreign_key "profiles", "users"
+  add_foreign_key "profiles", "users", on_delete: :cascade
 end

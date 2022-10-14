@@ -1,4 +1,5 @@
 ActiveAdmin.register User do
+
   permit_params :email, :password, :password_confirmation, role_ids: [], 
   profile_attributes: [:id, :first_name, :last_name, :grade_id, :speciality_id]
   
@@ -8,7 +9,7 @@ ActiveAdmin.register User do
     column(:Last_name) { |user| user.profile.last_name }
     column(:Grade_name) { |user| user.profile.grade.name }
     column(:Grade_level) { |user| user.profile.grade.level }
-    column(:Speciality) { |user| user.profile.speciality }
+    column(:Speciality) { |user| user.profile.speciality.name }
     column :email
     column :roles
     actions
@@ -20,7 +21,7 @@ ActiveAdmin.register User do
       row(:Last_name) { |user| user.profile.last_name }
       row(:Grade_name) { |user| user.profile.grade.name }
       row(:Grade_level) { |user| user.profile.grade.level }
-      row(:Speciality) { |user| user.profile.speciality }
+      row(:Speciality) { |user| user.profile.speciality.name }
       row :email
       row :roles
     end
@@ -44,5 +45,30 @@ ActiveAdmin.register User do
       p.input :speciality
     end
     f.actions
+  end
+
+  action_item :only => :index do
+    link_to 'Upload CSV', :action => 'upload_csv'
+  end
+
+  collection_action :upload_csv do
+    render "admin/csv/upload_csv"
+  end
+
+  collection_action :import_csv, method: :post do
+
+    import = CsvImportUsersService.new
+    
+    import.convert_save(params[:dump][:file])
+    redirect_to({ action: :index })
+    
+    if import.message.notice.present?
+      flash[:notice] = import.message.notice
+    end
+
+    if import.message.error.present?
+      flash[:error] = import.message.error
+    end
+
   end
 end
