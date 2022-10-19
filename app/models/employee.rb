@@ -1,0 +1,3 @@
+class Employee < Pool
+
+end
