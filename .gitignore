@@ -39,3 +39,5 @@
 >>>>>>> 4f3feaeda8f585b0634da1d8505268a3668d462b
 # Ignore .vscode
 /.vscode
+
+/.env

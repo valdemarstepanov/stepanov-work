@@ -27,6 +27,7 @@ ActiveAdmin.register User do
     end
   end
 
+  filter :roles
   filter :email
   
   form do |f|
@@ -69,6 +70,12 @@ ActiveAdmin.register User do
     if import.message.error.present?
       flash[:error] = import.message.error
     end
-
   end
+
+  controller do
+    def scoped_collection
+      super.includes :profile, :roles
+    end
+  end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_13_161307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_grades_on_name"
+  end
+
+  create_table "pools", force: :cascade do |t|
+    t.string "type"
+    t.bigint "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_pools_on_profile_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -90,7 +98,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-<<<<<<< HEAD
   create_table "users_roles", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
@@ -99,8 +106,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_29_130208) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-=======
->>>>>>> 4f3feaeda8f585b0634da1d8505268a3668d462b
   add_foreign_key "profiles", "grades"
   add_foreign_key "profiles", "specialities"
   add_foreign_key "profiles", "users", on_delete: :cascade

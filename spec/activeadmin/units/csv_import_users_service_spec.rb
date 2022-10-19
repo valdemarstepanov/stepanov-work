@@ -4,9 +4,9 @@ require 'csv'
 RSpec.describe CsvImportUsersService do
   describe 'import good file' do
     let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/activeadmin/units/test_ok.csv'), 'csv') }
-
+    
     subject { CsvImportUsersService.new.convert_save(file) }
-
+    
     it 'create user from csv file' do
       expect { subject }.to change { User.count }.by(1)
     end
@@ -31,6 +31,17 @@ RSpec.describe CsvImportUsersService do
       expect(Grade.first.name).to eq 'trainee'
       expect(Grade.first.level).to eq 'D0'
       expect(Speciality.first.name).to eq 'Front-end'
+    end
+  end
+
+  describe 'import faild file' do
+    let(:file_fail) { Rack::Test::UploadedFile.new(Rails.root.join('spec/activeadmin/units/test_fail.csv'), 'csv') }
+    subject { CsvImportUsersService.new.convert_save(file_fail) }
+
+    User.create(email: 'test5@gmail.com', password: 'password', password_confirmation: 'password')
+
+    it 'email repeated user not created' do
+      expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end
