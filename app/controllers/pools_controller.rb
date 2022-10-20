@@ -1,6 +1,10 @@
 class PoolsController < ApplicationController
   before_action :authenticate_user!
   
+  def index
+    @pools = Pool.order(parent_id: :asc)
+  end
+
   def new
     @pool = Pool.new
   end
@@ -14,6 +18,13 @@ class PoolsController < ApplicationController
       flash[:alert] = 'Error! New pool is not created!'
       redirect_to new_pool_path
     end
+  end
+
+  def destroy
+    @pool = Pool.find(params[:id])
+    @pool.destroy
+    flash[:notice] = 'Pool deleted!'
+    redirect_to root_path
   end
 
   private

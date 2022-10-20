@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_082756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_id"
-    t.index ["profile_id"], name: "index_pools_on_profile_id"
+    t.index ["profile_id"], name: "index_pools_on_profile_id", unique: true
     t.index ["type"], name: "index_pools_on_type"
   end
 
