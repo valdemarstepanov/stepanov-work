@@ -1,2 +1,8 @@
-<h3> Hello World </h3>
+<% if user_signed_in? %>
+  User role: <%= current_user.roles.pluck(:name) %>
+<% end %>
 
+<div class="p-4 sm:w-1/4 w-1/2">
+<% @pool.each do |pool| %>
+  <%= pool.type %>
+<% end %>

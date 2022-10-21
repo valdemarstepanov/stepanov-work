@@ -5,6 +5,7 @@ ActiveAdmin.register User do
   
   index do
     id_column
+    column(:Profile_id) { |user| user.profile.id }
     column(:First_name) { |user| user.profile.first_name }
     column(:Last_name) { |user| user.profile.last_name }
     column(:Grade_name) { |user| user.profile.grade.name }
@@ -74,7 +75,7 @@ ActiveAdmin.register User do
 
   controller do
     def scoped_collection
-      super.includes :profile, :roles
+      super.eager_load(:profile, :roles, :roles_users)
     end
   end
 
