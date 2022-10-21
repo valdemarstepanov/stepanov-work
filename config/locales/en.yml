@@ -30,4 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  controllers:
+    pools_controller:
+      create:
+        flash:
+          notice: 'Succes! New pool is created!'
+          alert: 'Pool is not created!'
+      destroy:
+        flash:
+          notice: 'Delete Pool'    
+    omniauth_callbacks_controller:
+      google_oauth2:
+        flash:
+          notice: 'devise.omniauth_callbacks.success'

@@ -24,6 +24,8 @@ gem 'dotenv-rails'
 
 gem 'closure_tree'
 
+gem 'rails-i18n'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
