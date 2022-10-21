@@ -1,4 +1,4 @@
-class PoolsController < ApplicationController
+class PoolsController < BaseController
   before_action :authenticate_user!
   
   def index
