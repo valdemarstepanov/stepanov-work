@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :speciality do
-    name                    { 'backend' }
+    name                    { FFaker::Name.unique.name }
   end
 end

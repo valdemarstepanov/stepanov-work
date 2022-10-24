@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   devise_for :user, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  root to: "home#index"
+  root to: "pools#index"
 
   resources :pools
 
