@@ -26,6 +26,8 @@ gem 'closure_tree'
 
 gem 'rails-i18n'
 
+gem 'pundit'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -75,6 +77,7 @@ group :development, :test do
   gem "bullet"
 
   gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :development do

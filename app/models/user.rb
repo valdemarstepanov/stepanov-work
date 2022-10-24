@@ -6,10 +6,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  validates :email, uniqueness: true
+ 
   # validates :profile, presence: true
 
-  has_one :profile, dependent: :destroy
+  has_one :profile
   accepts_nested_attributes_for :profile
 
   # before_create :assign_role

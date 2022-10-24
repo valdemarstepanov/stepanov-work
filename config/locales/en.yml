@@ -30,7 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+
   controllers:
+    application_controller:
+      user_not_authorized:
+        flash:
+          alert: 'Only manager can create or destroy'
+ 
     pools_controller:
       create:
         flash:
@@ -39,7 +45,3 @@ en:
       destroy:
         flash:
           notice: 'Delete Pool'    
-    omniauth_callbacks_controller:
-      google_oauth2:
-        flash:
-          notice: 'devise.omniauth_callbacks.success'

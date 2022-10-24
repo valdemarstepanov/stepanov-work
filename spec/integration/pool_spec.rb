@@ -11,7 +11,7 @@ RSpec.describe 'Create Pool', :js, type: :feature do
   
     scenario 'create new manager pool' do
       login(user)
-        
+      user.add_role :manager
       visit root_path
 
       find_field(id: "pool_type_manager").click

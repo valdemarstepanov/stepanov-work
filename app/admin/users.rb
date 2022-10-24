@@ -75,7 +75,7 @@ ActiveAdmin.register User do
 
   controller do
     def scoped_collection
-      super.eager_load(:profile, :roles, :roles_users)
+      super.includes(:profile, :roles)
     end
   end
 
