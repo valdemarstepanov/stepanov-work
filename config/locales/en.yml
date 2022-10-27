@@ -30,4 +30,18 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+
+  controllers:
+    application_controller:
+      user_not_authorized:
+        flash:
+          alert: 'Only manager can create or destroy'
+ 
+    pools_controller:
+      create:
+        flash:
+          notice: 'Succes! New pool is created!'
+          alert: 'Pool is not created!'
+      destroy:
+        flash:
+          notice: 'Delete Pool'    

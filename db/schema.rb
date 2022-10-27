@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_082756) do
     t.datetime "updated_at", null: false
     t.index ["grade_id"], name: "index_profiles_on_grade_id"
     t.index ["speciality_id"], name: "index_profiles_on_speciality_id"
-    t.index ["user_id"], name: "index_profiles_on_user_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
@@ -116,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_082756) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "pools", "profiles", on_delete: :cascade
   add_foreign_key "profiles", "grades"
   add_foreign_key "profiles", "specialities"
   add_foreign_key "profiles", "users", on_delete: :cascade

@@ -24,8 +24,8 @@ RSpec.describe 'User', :js, type: :feature do
         find_field(name: 'user[profile_attributes][grade_id]').find(:option, grade.name).select_option
         find_field(name: 'user[profile_attributes][speciality_id]').find(:option, speciality.name).select_option
 
-        click_on 'Create User'
-      end
+         click_on 'Create User'
+       end
   
       expect(page).to have_content 'User was successfully created.'
       expect(page).to have_content 'test@gmail.example'

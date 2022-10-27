@@ -2,7 +2,7 @@ class PoolsController < BaseController
   before_action :authenticate_user!
   
   def index
-    @pools = Pool.order(parent_id: :asc)
+    @pools = Pool.includes(profile: :user).order(parent_id: :asc)
   end
 
   def new
@@ -10,21 +10,23 @@ class PoolsController < BaseController
   end
     
   def create
-    @pool = Pool.create(pool_params)
-    if @pool.save
-      flash[:notice] = 'Succes! New pool is created!'
-      redirect_to root_path
-    else
-      flash[:alert] = 'Error! New pool is not created!'
-      redirect_to new_pool_path
-    end
+    @pool = Pool.new(pool_params)
+    authorize @pool, policy_class: PoolPolicy
+      if @pool.save!
+        redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
+      else
+        redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
+      end
   end
 
   def destroy
     @pool = Pool.find(params[:id])
-    @pool.destroy
-    flash[:notice] = 'Pool deleted!'
-    redirect_to root_path
+    if authorize @pool, policy_class: PoolPolicy
+      @pool.destroy!
+      redirect_to root_path, notice: t('controllers.pools_controller.destroy.flash.notice')
+    else
+      redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
+    end
   end
 
   private
