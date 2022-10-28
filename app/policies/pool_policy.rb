@@ -8,9 +8,9 @@ class PoolPolicy
     @record = record
   end
   
-  # def index?
-  #   user.has_role? :manager
-  # end
+  def index?
+    false
+  end
   
   def show?
     false
@@ -51,6 +51,6 @@ class PoolPolicy
         scope.none
       end
     end
-    
+
   end
 end
