@@ -9,7 +9,7 @@ class PoolPolicy
   end
   
   def index?
-    user.has_role? :manager
+    false
   end
   
   def show?
@@ -34,5 +34,23 @@ class PoolPolicy
   
   def destroy?
     user.has_role? :manager
+  end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      if user.has_role? :manager
+        scope.all
+      else
+        scope.none
+      end
+    end
+
   end
 end

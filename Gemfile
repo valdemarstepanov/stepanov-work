@@ -23,6 +23,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'dotenv-rails'
 
 gem 'closure_tree'
+gem 'ruby-graphviz'
 
 gem 'rails-i18n'
 

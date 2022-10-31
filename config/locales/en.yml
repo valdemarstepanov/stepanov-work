@@ -44,4 +44,5 @@ en:
           alert: 'Pool is not created!'
       destroy:
         flash:
-          notice: 'Delete Pool'    
+          notice: 'Delete Pool'   
+          alert: 'Forbidden delete root pool!' 
