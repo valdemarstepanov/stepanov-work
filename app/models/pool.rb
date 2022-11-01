@@ -5,6 +5,8 @@ class Pool < ApplicationRecord
   
   has_closure_tree
 
+  has_paper_trail
+
   validates :type, presence: true
 
   def to_digraph_label
@@ -16,4 +18,23 @@ class Pool < ApplicationRecord
     pools_for_update.each {|pool| pool.update(parent_id: profile.pool.parent_id)}
   end
 
+  def self.to_dot_digraph(tree_scope, highlight_id)
+    id_to_instance = tree_scope.reduce({}) { |h, pool| h[pool.id] = pool; h }
+    output = StringIO.new
+    output << "digraph G {\n"
+    tree_scope.each do |pool|
+      if id_to_instance.key? pool._ct_parent_id
+        output << "  \"#{pool._ct_parent_id}\" -> \"#{pool._ct_id}\"\n"
+      end
+
+      if highlight_id == pool.profile.id
+        output << "  \"#{pool._ct_id}\" [label=\"#{pool.to_digraph_label}\"]\n"
+        output << "  \"#{pool._ct_id}\" [color=\"green\" fontcolor=\"green\"]\n"
+      else
+        output << "  \"#{pool._ct_id}\" [label=\"#{pool.to_digraph_label}\"]\n"
+      end
+    end
+    output << "}\n"
+    output.string
+  end
 end

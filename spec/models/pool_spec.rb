@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Pool, type: :model do
   it { is_expected.to belong_to(:profile) }
   it { is_expected.to validate_presence_of(:type) }
-
+  
   it "should have attribute type and parent_id" do
     expect(subject).to have_attribute :type
     expect(subject).to have_attribute :parent_id
