@@ -8,15 +8,16 @@ class PoolsController < BaseController
 
   def new
     @pool = Pool.new
+
   end
 
   def show
-    if params[:id]
-      @pools = Pool.includes(:profile)
-      ::GraphGenerator.new.call(@pools, current_user.profile.id) if @pools.present?
-    else
-      redirect_to root_path
-    end
+    # date = params[:date]
+    # pool = Pool.find(params[:id])
+    # pool.paper_trail.version_at(date)
+    # binding.pry
+    @pools = Pool.includes(:profile)
+    ::GraphGenerator.new.call(@pools, current_user.profile.id) if @pools.present?
   end
 
   def create
@@ -36,7 +37,6 @@ class PoolsController < BaseController
 
     authorize @pool, policy_class: PoolPolicy
 
-    # unless @pool.parent_id.nil?
     if @pool.destroy!
       redirect_to root_path, notice: t('controllers.pools_controller.destroy.flash.notice')
     else
