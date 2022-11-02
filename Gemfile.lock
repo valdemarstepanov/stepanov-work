@@ -232,6 +232,11 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    paper_trail (13.0.0)
+      activerecord (>= 5.2)
+      request_store (~> 1.1)
+    paper_trail-association_tracking (2.2.1)
+      paper_trail (>= 12.0)
     pg (1.4.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -291,6 +296,8 @@ GEM
     regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
+    request_store (1.5.1)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -401,6 +408,8 @@ DEPENDENCIES
   kaminari
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
+  paper_trail
+  paper_trail-association_tracking
   pg (~> 1.1)
   pry
   pry-byebug

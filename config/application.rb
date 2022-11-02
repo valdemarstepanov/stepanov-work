@@ -19,5 +19,6 @@ module StepanovWork
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_paths << Rails.root.join('lib')
+    config.active_record.yaml_column_permitted_classes = [ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, Time, Date]
   end
 end
