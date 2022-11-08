@@ -2,10 +2,8 @@ class Pool < ApplicationRecord
   before_destroy :change_parent_pools
 
   belongs_to :profile
-  
-  has_closure_tree
 
-  has_paper_trail
+  has_closure_tree
 
   validates :type, presence: true
 

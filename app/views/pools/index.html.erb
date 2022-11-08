@@ -16,7 +16,7 @@
       <div class="text-center mb-6">
         <%= f.label :name, "Supervisor" %>
         <%= f.select :parent_id, options_for_select(Pool.includes(:profile).all.map { |pool| 
-        ["#{pool.profile.first_name} #{pool.profile.last_name}", pool.id] }),  { include_blank: true } %>
+        ["#{pool.profile.first_name} #{pool.profile.last_name}", pool.id] }) %>
         <%= f.label :name, "User" %>
         <%= f.select :profile_id, options_for_select(Profile.where.not(id: Pool.pluck(:profile_id)).map { |profile| 
         ["#{profile.first_name} #{profile.last_name}", profile.id] } )%>
@@ -81,7 +81,7 @@
 
 <div class="justify-center flex items-center mt-8">
   <% if @pools.present? %>
-    <%= image_tag "graph4.png" %>
+    <%= image_tag "graph5.png" %>
   <% else %>
     <%= 'CLEAR TREE' %>
   <% end %>

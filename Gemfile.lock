@@ -46,6 +46,10 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_snapshot (0.2.4)
+      activerecord
+      activerecord-import
+      railties
     activeadmin (2.13.1)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (>= 3.1, < 5.0)
@@ -63,6 +67,8 @@ GEM
     activerecord (7.0.4)
       activemodel (= 7.0.4)
       activesupport (= 7.0.4)
+    activerecord-import (1.4.1)
+      activerecord (>= 4.2)
     activestorage (7.0.4)
       actionpack (= 7.0.4)
       activejob (= 7.0.4)
@@ -232,11 +238,6 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    paper_trail (13.0.0)
-      activerecord (>= 5.2)
-      request_store (~> 1.1)
-    paper_trail-association_tracking (2.2.1)
-      paper_trail (>= 12.0)
     pg (1.4.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -296,8 +297,6 @@ GEM
     regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
-    request_store (1.5.1)
-      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -392,6 +391,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_snapshot
   activeadmin
   bootsnap
   bullet
@@ -408,8 +408,6 @@ DEPENDENCIES
   kaminari
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
-  paper_trail
-  paper_trail-association_tracking
   pg (~> 1.1)
   pry
   pry-byebug

@@ -38,4 +38,3 @@ class CsvImportUsersService
     end
   end
 end
-

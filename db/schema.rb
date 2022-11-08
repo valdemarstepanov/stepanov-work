@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_28_071919) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -89,6 +89,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_071919) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
+  create_table "snapshot_items", force: :cascade do |t|
+    t.bigint "snapshot_id", null: false
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.text "object", null: false
+    t.datetime "created_at", null: false
+    t.string "child_group_name"
+    t.index ["item_type", "item_id"], name: "index_snapshot_items_on_item"
+    t.index ["snapshot_id"], name: "index_snapshot_items_on_snapshot_id"
+  end
+
+  create_table "snapshots", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "identifier", null: false
+    t.string "user_type"
+    t.bigint "user_id"
+    t.text "metadata"
+    t.datetime "created_at", null: false
+    t.index ["identifier"], name: "index_snapshots_on_identifier"
+    t.index ["item_type", "item_id"], name: "index_snapshots_on_item"
+    t.index ["user_type", "user_id"], name: "index_snapshots_on_user"
+  end
+
   create_table "specialities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -114,17 +138,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_071919) do
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
-  end
-
-  create_table "versions", force: :cascade do |t|
-    t.string "item_type", null: false
-    t.bigint "item_id", null: false
-    t.string "event", null: false
-    t.string "whodunnit"
-    t.text "object"
-    t.string "item_subtype"
-    t.datetime "created_at"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "pools", "profiles", on_delete: :cascade
