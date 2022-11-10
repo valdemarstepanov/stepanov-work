@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root to: "pools#index"
   
   resources :pools
-  resources :snapshots
-
+  resources :snapshots do
+    get :snapshot_graph, to: 'snapshots#snapshot_graph'
+  end
 end

@@ -7,6 +7,8 @@ class Pool < ApplicationRecord
 
   validates :type, presence: true
 
+  scope :root_for_profile, ->(profile_id) { where(profile_id: profile_id).where(parent_id: nil) }
+
   def to_digraph_label
     "#{profile.first_name} #{profile.last_name} / #{type}"
   end
@@ -34,4 +36,5 @@ class Pool < ApplicationRecord
     output << "}\n"
     output.string
   end
+
 end

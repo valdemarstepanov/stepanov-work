@@ -13,7 +13,7 @@ module HasSnapshotChildren
 
       {
         descendants: descendants,
-        descendants_profile: descendants.map { |d| d.profile }
+        descendants_profiles: descendants.map { |d| d.profile }
       }
     end
   end
