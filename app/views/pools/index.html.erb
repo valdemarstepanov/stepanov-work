@@ -90,14 +90,10 @@
   
   <div class="justify-center flex items-center mt-8">
     <% if @pools.present? %>
-      <%= image_tag "graph6.png" %>
+      <img src='<%=pool_path(@pools)%>'>
     <% else %>
       <%= 'CLEAR TREE' %>
     <% end %>
-  </div>
-
-  <div class="justify-center flex items-center mt-8">
-    <%= render 'pools/history_tree' %>
   </div>
 
 <% else %>

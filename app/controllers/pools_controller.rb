@@ -2,8 +2,6 @@ class PoolsController < BaseController
   before_action :authenticate_user!
 
   def index
-    @snapshots = ActiveSnapshot::Snapshot.all
-    
     redirect_to pool_path(current_user) if current_user.has_role? :user
 
     @pools = policy_scope(Pool).includes(profile: :user).order(parent_id: :asc)
@@ -22,6 +20,7 @@ class PoolsController < BaseController
   def show
     @pools = Pool.includes(:profile)
     ::GraphGenerator.new.call(@pools, current_user.profile.id) if @pools.present?
+    send_file File.open(Rails.root.join('/tmp/graph7.png'), 'r')
   end
 
   def create

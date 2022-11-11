@@ -2,6 +2,15 @@ require 'securerandom'
 
 class SnapshotsController < BaseController
 
+  def index
+    @snapshots = ActiveSnapshot::Snapshot.all
+  end
+  
+  def show
+    @snapshots = ActiveSnapshot::Snapshot.all
+    @snapshot = ActiveSnapshot::Snapshot.find(params[:id])
+  end
+
   def create 
     snapshot_parent = Pool.find_by parent_id: nil
     # snapshot_parent = Pool.root_for_pool
@@ -14,10 +23,6 @@ class SnapshotsController < BaseController
     end
   end
 
-  def show
-    @snapshot = ActiveSnapshot::Snapshot.find(params[:id])
-  end
-
   def snapshot_graph
     snapshot = ActiveSnapshot::Snapshot.find(params[:snapshot_id])
     reified_parent, reified_children_hash = snapshot.fetch_reified_items
@@ -28,10 +33,9 @@ class SnapshotsController < BaseController
       child.profile = reified_children_hash['descendants_profiles'][i]
       result << child
     end
+
     File.open("/tmp/test.dot", "w") { |f| f.write(Pool.to_dot_digraph(result, current_user.profile.id)) }
     GraphViz.parse( "/tmp/test.dot", :path => "/" ).output(:png => "/tmp/test3.png")
-    # binding.pry
-    # send_file Rails.root.join('/public/assets/graph1-788b1a6dc7718d4a8117dde2a1d3c413e5aa6763235594f26908cecc4756970f.png'), :type  =>  'image/png', :disposition  =>  'inline'
     send_file File.open(Rails.root.join('/tmp/test3.png'), 'r')
   end
 end
