@@ -6,5 +6,4 @@ class Profile < ApplicationRecord
   has_one :pool
 
   validates :first_name, :last_name, :grade_id, :speciality_id, presence: true
-  
 end

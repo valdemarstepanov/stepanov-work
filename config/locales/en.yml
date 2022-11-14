@@ -46,3 +46,9 @@ en:
         flash:
           notice: 'Delete Pool'   
           alert: 'Forbidden delete root pool!' 
+
+    snapshots_controller:
+      create:
+          flash:
+            notice: 'Succes! Snapshot is created!'
+            alert: 'Snapshot is not created!'

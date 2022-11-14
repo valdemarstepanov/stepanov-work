@@ -29,8 +29,10 @@ gem 'rails-i18n'
 
 gem 'pundit'
 
-gem 'paper_trail'
+gem 'active_snapshot'
 
+ gem 'draper'
+ 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 

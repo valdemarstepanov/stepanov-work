@@ -46,6 +46,10 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_snapshot (0.2.4)
+      activerecord
+      activerecord-import
+      railties
     activeadmin (2.13.1)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (>= 3.1, < 5.0)
@@ -60,9 +64,15 @@ GEM
       globalid (>= 0.3.6)
     activemodel (7.0.4)
       activesupport (= 7.0.4)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (7.0.4)
       activemodel (= 7.0.4)
       activesupport (= 7.0.4)
+    activerecord-import (1.4.1)
+      activerecord (>= 4.2)
     activestorage (7.0.4)
       actionpack (= 7.0.4)
       activejob (= 7.0.4)
@@ -126,6 +136,13 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    draper (4.0.2)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
+      ruby2_keywords
     erubi (1.11.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -232,11 +249,6 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
-    paper_trail (13.0.0)
-      activerecord (>= 5.2)
-      request_store (~> 1.1)
-    paper_trail-association_tracking (2.2.1)
-      paper_trail (>= 12.0)
     pg (1.4.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -392,6 +404,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_snapshot
   activeadmin
   bootsnap
   bullet
@@ -401,6 +414,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  draper
   factory_bot_rails
   ffaker
   importmap-rails
@@ -408,8 +422,6 @@ DEPENDENCIES
   kaminari
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
-  paper_trail
-  paper_trail-association_tracking
   pg (~> 1.1)
   pry
   pry-byebug

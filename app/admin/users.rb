@@ -60,7 +60,6 @@ ActiveAdmin.register User do
   collection_action :import_csv, method: :post do
 
     import = CsvImportUsersService.new
-    
     import.convert_save(params[:dump][:file])
     redirect_to({ action: :index })
     

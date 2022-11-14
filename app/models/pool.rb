@@ -1,11 +1,10 @@
 class Pool < ApplicationRecord
+
   before_destroy :change_parent_pools
 
   belongs_to :profile
-  
-  has_closure_tree
 
-  has_paper_trail
+  has_closure_tree
 
   validates :type, presence: true
 
@@ -27,9 +26,8 @@ class Pool < ApplicationRecord
         output << "  \"#{pool._ct_parent_id}\" -> \"#{pool._ct_id}\"\n"
       end
 
-      if highlight_id == pool.profile.id
-        output << "  \"#{pool._ct_id}\" [label=\"#{pool.to_digraph_label}\"]\n"
-        output << "  \"#{pool._ct_id}\" [color=\"green\" fontcolor=\"green\"]\n"
+      if highlight_id == pool.profile.id  
+        output << "  \"#{pool._ct_id}\" [label=\"#{pool.to_digraph_label}\" color=\"green\" fontcolor=\"green\"]\n"
       else
         output << "  \"#{pool._ct_id}\" [label=\"#{pool.to_digraph_label}\"]\n"
       end

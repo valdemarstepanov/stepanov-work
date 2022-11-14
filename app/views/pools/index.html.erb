@@ -1,4 +1,5 @@
 <% if current_user.has_role? :manager %>
+
   <div class="block p-6 rounded-lg shadow-lg bg-white w-1/3 m-auto mb-3">
     <%= form_for Pool.new do |f| %>
 
@@ -14,12 +15,10 @@
       </div>
 
       <div class="text-center mb-6">
-        <%= f.label :name, "Supervisor" %>
-        <%= f.select :parent_id, options_for_select(Pool.includes(:profile).all.map { |pool| 
-        ["#{pool.profile.first_name} #{pool.profile.last_name}", pool.id] }),  { include_blank: true } %>
-        <%= f.label :name, "User" %>
-        <%= f.select :profile_id, options_for_select(Profile.where.not(id: Pool.pluck(:profile_id)).map { |profile| 
-        ["#{profile.first_name} #{profile.last_name}", profile.id] } )%>
+        <%= f.label :name, "Parent" %>
+        <%= f.select :parent_id, options_for_select(@select_parents) %>
+        <%= f.label :name, "Children" %>
+        <%= f.select :profile_id, options_for_select(@select_children)%>
       </div>
 
       <%= button_to "Create New Pool", new_pool_path, method: :get,
@@ -42,7 +41,7 @@
           ease-in-out' %>
     <% end %>
   </div>
-
+  
   <table class="shadow-lg bg-white border-separate text-center mx-auto">
     <tr>
       <th class="bg-blue-100 border text-center px-8 py-4">ID</th> 
@@ -54,13 +53,13 @@
       <th class="bg-blue-100 border text-center px-8 py-4 ">Email</th>
       <th class="bg-blue-100 border text-center px-8 py-4">Delete</th>
     </tr>
-    <% @pools.each do |pool| %>
+    <% @pools.decorate.each do |pool| %>
       <tr>
         <td class="border px-8 py-4"><%= pool.id %></td>
         <td class="border px-8 py-4"><%= pool.parent_id %></td>
         <td class="border px-8 py-4"><%= pool.type %></td>
-        <td class="border px-8 py-4"><%= "#{pool.profile.first_name} #{pool.profile.last_name}" %></td>
-        <td class="border px-8 py-4"><%= "#{pool.profile.grade.name} #{pool.profile.grade.level}" %></td>
+        <td class="border px-8 py-4"><%= pool.full_name %></td>
+        <td class="border px-8 py-4"><%= pool.full_grade %></td>
         <td class="border px-8 py-4"><%= pool.profile.speciality.name %></td>
         <td class="border px-8 py-4"><%= pool.profile.user.email %></td>
         <td class="border px-8 py-4"> 
@@ -78,17 +77,31 @@
       </tr>      
     <% end %>
   </table>
+  
+  <table class="text-center mx-auto">
+    <th><%= paginate @pools %></th> 
+  </table>
 
-<div class="justify-center flex items-center mt-8">
-  <% if @pools.present? %>
-    <%= image_tag "graph3.png" %>
-  <% else %>
-    <%= 'CLEAR TREE' %>
-  <% end %>
-</div>
+  <div class="h-10 px-5 m-2 flex justify">
+    <%= button_to snapshots_path(root: @pool_root), method: :post,
+    class:"text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 
+    hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 
+    focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium 
+    rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" do %>
+      <p> Create Snapshot! </p>
+    <% end %>
+  </div>
+
+  <div class="justify-center flex items-center mt-8">
+    <% if @pools.present? %>
+      <img src='<%=pool_graph_pools_path(r: Time.now.to_i)%>'>
+    <% else %>
+      <%= 'CLEAR TREE' %>
+    <% end %>
+  </div>
 
 <% else %>
-<div class="justify-center flex items-center mt-8">
-  <h1> The data on this page can only be seen by the manager </h1>
-</div>
+  <div class="justify-center flex items-center mt-8">
+    <img src='<%=pool_graph_pools_path(r: Time.now.to_i)%>'>
+  </div>
 <% end %>
