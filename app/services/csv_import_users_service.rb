@@ -4,9 +4,8 @@ require 'ostruct'
 class CsvImportUsersService
 
   attr_accessor :message
-
+  
   def convert_save(csv_file)
-
     @message = OpenStruct.new(error: '', notice: '')
     
     CSV.foreach(csv_file.path) do |row|

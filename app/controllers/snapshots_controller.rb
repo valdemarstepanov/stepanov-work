@@ -10,10 +10,9 @@ class SnapshotsController < BaseController
   end
 
   def create
-    binding.pry
     pool_parent = Pool.find(params[:root])
     snapshot = pool_parent.create_snapshot!("Time: #{Time.new}
-      Manager: #{current_user.profile.first_name} #{current_user.profile.last_name}")
+      Creator: #{current_user.profile.first_name} #{current_user.profile.last_name}")
     if snapshot.save
       redirect_to root_path, notice: t('controllers.snapshots_controller.create.flash.notice')
     else
