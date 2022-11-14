@@ -1,4 +1,5 @@
 class Pool < ApplicationRecord
+
   before_destroy :change_parent_pools
 
   belongs_to :profile
@@ -6,8 +7,6 @@ class Pool < ApplicationRecord
   has_closure_tree
 
   validates :type, presence: true
-
-  scope :root_for_profile, ->(profile_id) { where(profile_id: profile_id).where(parent_id: nil) }
 
   def to_digraph_label
     "#{profile.first_name} #{profile.last_name} / #{type}"

@@ -6,7 +6,12 @@ Rails.application.routes.draw do
 
   root to: "pools#index"
   
-  resources :pools
+  resources :pools do
+    collection do
+      get :pool_graph, to: 'pools#pool_graph'
+    end
+  end
+
   resources :snapshots do
     get :snapshot_graph, to: 'snapshots#snapshot_graph'
   end

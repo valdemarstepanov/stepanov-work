@@ -1,8 +1,4 @@
-<div class="justify-center flex items-center mt-8">
-  <img src='<%=snapshot_snapshot_graph_path(@snapshot)%>'>
-</div>
-
-<table class="shadow-lg bg-white border-separate text-left mx-auto p-6">
+<table class="shadow-lg bg-white border-separate text-left mx-auto">
   <tr>
     <th class="bg-green-200 border text-center px-8 py-4">Id</th> 
     <th class="bg-green-200 border text-center px-8 py-4">Snapshot</th>
@@ -28,3 +24,11 @@
     </tr>      
   <% end %>
 </table>
+
+<table class="text-center mx-auto">
+  <th><%= paginate @snapshots %></th> 
+</table>
+
+<div class="justify-center flex items-center mt-8 mb-5">
+  <img src='<%=snapshot_snapshot_graph_path(@snapshot)%>'>
+</div>

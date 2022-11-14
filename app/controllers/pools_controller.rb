@@ -1,26 +1,13 @@
 class PoolsController < BaseController
-  before_action :authenticate_user!
 
   def index
-    redirect_to pool_path(current_user) if current_user.has_role? :user
+    @pools = policy_scope(Pool).includes(profile: :user).order(parent_id: :asc).page(params[:page]).per(5)
+    @pool_root = @pools.root
 
-    @pools = policy_scope(Pool).includes(profile: :user).order(parent_id: :asc)
-
-    @select_parent = Pool.includes(:profile).decorate.map { |pool| [pool.full_name, pool.id] }
-    @select_children = Profile.where.not(id: Pool.pluck(:profile_id)).decorate.map { |profile|
-      [profile.full_name, profile.id] }
-      
-    ::GraphGenerator.new.call(@pools, current_user.profile.id) if @pools.present?
-  end
-
-  def new
-    @pool = Pool.new
-  end
-
-  def show
-    @pools = Pool.includes(:profile)
-    ::GraphGenerator.new.call(@pools, current_user.profile.id) if @pools.present?
-    send_file File.open(Rails.root.join('/tmp/graph7.png'), 'r')
+    @select_parents = @pools.decorate.map { |pool| [pool.full_name, pool.id] }
+    @select_children = Profile.where.not(id: Pool.pluck(:profile_id)).decorate.map do |profile|
+      [profile.full_name, profile.id]
+    end
   end
 
   def create
@@ -46,6 +33,11 @@ class PoolsController < BaseController
     else
       redirect_to root_path, alert: t('controllers.pools_controller.destroy.flash.alert')
     end
+  end
+
+  def pool_graph
+    @pools = Pool.includes(:profile)
+    send_file ::GraphGenerator.new.call(@pools, current_user.profile.id)
   end
 
   private

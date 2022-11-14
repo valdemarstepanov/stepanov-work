@@ -1,3 +1,5 @@
+<p class="text-2xl text-center mb-5 mt-5">Select the date and click Check tree image</p>
+
 <table class="shadow-lg bg-white border-separate text-left mx-auto">
   <tr>
     <th class="bg-green-200 border text-center px-8 py-4">Id</th> 
@@ -23,4 +25,8 @@
       </td>
     </tr>      
   <% end %>
+</table>
+
+<table class="text-center mx-auto">
+  <th><%= paginate @snapshots %></th> 
 </table>
