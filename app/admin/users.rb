@@ -58,17 +58,24 @@ ActiveAdmin.register User do
   end
 
   collection_action :import_csv, method: :post do
-
-    import = CsvImportUsersService.new
-    import.convert_save(params[:dump][:file])
-    redirect_to({ action: :index })
     
-    if import.message.notice.present?
-      flash[:notice] = import.message.notice
-    end
+    if params[:dump].present?
+    
+      import = CsvImportUsersService.new
+      import.convert_save(params[:dump][:file])
+      redirect_to({ action: :index })
+      
+      if import.message.notice.present?
+        flash[:notice] = import.message.notice
+      end
 
-    if import.message.error.present?
-      flash[:error] = import.message.error
+      if import.message.error.present?
+        flash[:error] = import.message.error
+      end
+      
+    else
+      redirect_to({ action: :upload_csv })
+      flash[:error] = 'File is not exists!'
     end
   end
 
@@ -77,5 +84,4 @@ ActiveAdmin.register User do
       super.includes(:profile, :roles)
     end
   end
-
 end

@@ -29,7 +29,7 @@ RSpec.describe PoolsController, type: :controller do
 
     context 'when params is valid' do
       let(:params) { { pool: attributes_for(:pool, profile_id: profile) } }
-      
+            
       it 'creates a new pool when user role has manager' do
         user.add_role :manager
         expect { subject }.to change { Pool.count }.by(1)
@@ -44,15 +44,15 @@ RSpec.describe PoolsController, type: :controller do
         subject
         expect(assigns(:pool).profile).to eq profile
       end
-    end
-
-    context 'when params is invalid' do
-      let(:params) { { pool: attributes_for(:pool) } }
 
       it 'trying create new pool when user role has user' do
         user.add_role :user
         expect { subject }.not_to change { Pool.count }
       end
+    end
+
+    context 'when params is invalid' do
+      let(:params) { { pool: attributes_for(:pool) } }
 
       it 'doesnt create a pool' do
         expect { subject }.not_to change { Pool.count }
@@ -81,21 +81,10 @@ RSpec.describe PoolsController, type: :controller do
       it 'after destroy redirect to poot path' do
         expect(subject).to redirect_to root_path
       end
-    end
 
-    context 'when params is invalid' do
-
-      let!(:pool) { create :pool, profile_id: profile.id }
-      let!(:other_pool) { create :pool, profile_id: other_profile.id, parent_id: pool.id }
-      let(:params) { { id: other_pool.id } }
-      
       it 'trying destroy pool when user role = user' do
         user.add_role :user
         expect { subject }.not_to change { Pool.count }
-      end
-
-      it 'after fail destroy redirect to poot path' do
-        expect(subject).to redirect_to root_path
       end
     end
 
@@ -114,4 +103,18 @@ RSpec.describe PoolsController, type: :controller do
       end
     end
   end
+
+  describe "#pool_graph" do
+
+    context 'build pool graph to file' do
+      let!(:pool) { create :pool, profile_id: profile.id }
+
+      it 'pool' do
+        
+        binding.pry
+      end
+    end
+  end
 end
+
+# controller.should_receive(:send_file).and_return{controller.render :nothing => true}
