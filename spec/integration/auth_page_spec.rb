@@ -4,7 +4,8 @@ RSpec.describe 'Authentication test', :js, type: :feature do
   describe 'authentication' do
     scenario 'success sign in' do
 
-      User.create!(email: 'user@example.com', password: 'password', password_confirmation: 'password')
+      user = User.create!(email: 'user@example.com', password: 'password', password_confirmation: 'password')
+      user.add_role :manager
 
       visit user_session_path
 

@@ -36,7 +36,6 @@ RSpec.describe 'Speciality', :js, type: :feature do
       expect(page).to have_content 'edit_speciality'
     end
   
-
     scenario 'destroy speciality' do
         sign_in(admin_user)
     
@@ -65,7 +64,6 @@ RSpec.describe 'Speciality', :js, type: :feature do
         expect(page).to have_content 'edit_speciality'
       end
     
-  
     scenario 'destroy speciality' do
       sign_in(admin_user)
     

@@ -11,11 +11,10 @@ class PoolsController < BaseController
   end
 
   def create
-    @pool = Pool.create(pool_params)
-
-    authorize @pool, policy_class: PoolPolicy
-
-    if @pool.save
+    @pool = Pool.new(pool_params)
+    
+    if authorize @pool, policy_class: PoolPolicy
+      @pool.save
       redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
     else
       redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
