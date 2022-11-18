@@ -66,7 +66,6 @@ RSpec.describe 'Grade', :js, type: :feature do
         expect(page).to have_content 'edit_field'
       end
     
-  
     scenario 'destroy grade' do
       sign_in(admin_user)
     

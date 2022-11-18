@@ -10,7 +10,7 @@ class SnapshotsController < BaseController
   end
 
   def create
-    pool_parent = Pool.find(params[:root])
+    pool_parent = Pool.find(params[:root_id])
     snapshot = pool_parent.create_snapshot!("Time: #{Time.new}
       Creator: #{current_user.profile.first_name} #{current_user.profile.last_name}")
     if snapshot.save

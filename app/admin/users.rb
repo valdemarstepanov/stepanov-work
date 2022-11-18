@@ -1,8 +1,9 @@
 ActiveAdmin.register User do
 
   permit_params :email, :password, :password_confirmation, role_ids: [], 
-  profile_attributes: [:id, :first_name, :last_name, :grade_id, :speciality_id]
-  
+  profile_attributes: [:id, :first_name, :last_name, :grade_id, :speciality_id],
+  grade_attributes: [:id, :name, :level]
+
   index do
     id_column
     column(:Profile_id) { |user| user.profile.id }
@@ -13,7 +14,6 @@ ActiveAdmin.register User do
     column(:Speciality) { |user| user.profile.speciality.name }
     column :email
     column :roles
-    actions
   end
 
   show do
@@ -58,17 +58,24 @@ ActiveAdmin.register User do
   end
 
   collection_action :import_csv, method: :post do
-
-    import = CsvImportUsersService.new
-    import.convert_save(params[:dump][:file])
-    redirect_to({ action: :index })
     
-    if import.message.notice.present?
-      flash[:notice] = import.message.notice
-    end
+    if params[:dump].present?
+    
+      import = CsvImportUsersService.new
+      import.convert_save(params[:dump][:file])
+      redirect_to({ action: :index })
+      
+      if import.message.notice.present?
+        flash[:notice] = import.message.notice
+      end
 
-    if import.message.error.present?
-      flash[:error] = import.message.error
+      if import.message.error.present?
+        flash[:error] = import.message.error
+      end
+      
+    else
+      redirect_to({ action: :upload_csv })
+      flash[:error] = 'File is not exists!'
     end
   end
 
@@ -77,5 +84,4 @@ ActiveAdmin.register User do
       super.includes(:profile, :roles)
     end
   end
-
 end
