@@ -117,7 +117,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  config.root_to = 'user#index'
+  config.root_to = 'users#index'
 
   # == Admin Comments
   #
@@ -125,6 +125,7 @@ ActiveAdmin.setup do |config|
   #
   # You can completely disable comments:
   config.comments = false
+ 
   #
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
