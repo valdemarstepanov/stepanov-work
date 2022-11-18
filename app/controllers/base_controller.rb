@@ -10,5 +10,4 @@ class BaseController < ApplicationController
   def user_not_authorized
     redirect_to root_path, alert: t('controllers.application_controller.user_not_authorized.flash.alert')
   end
-
 end

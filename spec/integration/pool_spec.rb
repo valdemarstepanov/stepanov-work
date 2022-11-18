@@ -16,7 +16,7 @@ RSpec.describe 'Create Pool', :js, type: :feature do
 
       find_field(id: "pool_type_manager").click
       find_field(name: 'pool[profile_id]').click
-      click_button('Create New Pool')
+      click_button('Create New Descent')
 
       expect(page).to have_current_path(root_path)
       expect(page).to have_content 'Succes! New pool is created!'

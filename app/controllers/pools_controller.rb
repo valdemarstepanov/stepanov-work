@@ -3,21 +3,21 @@ class PoolsController < BaseController
   def index
     @pools = policy_scope(Pool).includes(profile: :user).order(parent_id: :asc).page(params[:page]).per(5)
     @pool_root = policy_scope(Pool).root
-
-    @select_parents = @pools.decorate.map { |pool| [pool.full_name, pool.id] }
+    
+    @select_parents = Pool.includes(:profile).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
     @select_children = Profile.where.not(id: Pool.pluck(:profile_id)).decorate.map do |profile|
-      [profile.full_name, profile.id]
+      [profile.full_name_and_grade, profile.id]
     end
   end
 
   def create
-    @pool = Pool.new(pool_params)
+    @pool = Pool.create(pool_params)
     
     if authorize @pool, policy_class: PoolPolicy
-      @pool.save
+      @pool.save!
       redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
     else
-      redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
+      redirect_to root_path, alert: t('controllers.application_controller.user_not_authorized.flash.alert')
     end
   end
 

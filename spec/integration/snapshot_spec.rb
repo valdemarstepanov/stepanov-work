@@ -16,7 +16,7 @@ RSpec.describe 'Snapshot', :js, type: :feature do
 
       find_field(id: "pool_type_manager").click
       find_field(name: 'pool[profile_id]').click
-      click_button('Create New Pool')
+      click_button('Create New Descent')
 
       click_button('Create Snapshot!')
       expect(page).to have_current_path(root_path)

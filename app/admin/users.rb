@@ -1,8 +1,9 @@
 ActiveAdmin.register User do
 
   permit_params :email, :password, :password_confirmation, role_ids: [], 
-  profile_attributes: [:id, :first_name, :last_name, :grade_id, :speciality_id]
-  
+  profile_attributes: [:id, :first_name, :last_name, :grade_id, :speciality_id],
+  grade_attributes: [:id, :name, :level]
+
   index do
     id_column
     column(:Profile_id) { |user| user.profile.id }
@@ -13,7 +14,6 @@ ActiveAdmin.register User do
     column(:Speciality) { |user| user.profile.speciality.name }
     column :email
     column :roles
-    actions
   end
 
   show do

@@ -45,7 +45,7 @@ RSpec.describe PoolsController, type: :controller do
         expect(assigns(:pool).profile).to eq profile
       end
 
-      it 'trying create new pool when user role has user' do
+      xit 'trying create new pool when user role has user' do
         user.add_role :user
         expect { subject }.not_to change { Pool.count }
       end
@@ -110,11 +110,8 @@ RSpec.describe PoolsController, type: :controller do
       let!(:pool) { create :pool, profile_id: profile.id }
 
       it 'pool' do
-        
-        binding.pry
+
       end
     end
   end
 end
-
-# controller.should_receive(:send_file).and_return{controller.render :nothing => true}

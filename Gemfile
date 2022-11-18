@@ -31,7 +31,7 @@ gem 'pundit'
 
 gem 'active_snapshot'
 
- gem 'draper'
+gem 'draper'
  
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
