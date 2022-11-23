@@ -9,7 +9,7 @@ class Pool < ApplicationRecord
   validates :type, presence: true
 
   def to_digraph_label
-    "#{profile.first_name} #{profile.last_name} / #{type}"
+    "#{profile.first_name} #{profile.last_name}\n (#{profile.grade.name} / #{profile.speciality.name})"
   end
 
   def change_parent_pools
@@ -23,7 +23,7 @@ class Pool < ApplicationRecord
     output << "digraph G {\n"
     tree_scope.each do |pool|
       if id_to_instance.key? pool._ct_parent_id
-        output << "  \"#{pool._ct_parent_id}\" -> \"#{pool._ct_id}\"\n"
+        output << "  \"#{pool._ct_parent_id}\" -> \"#{pool._ct_id}\" [label = #{pool.type}]\n"
       end
 
       if highlight_id == pool.profile.id  

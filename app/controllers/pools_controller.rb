@@ -1,11 +1,11 @@
 class PoolsController < BaseController
 
   def index
-    @pools = policy_scope(Pool).includes(profile: :user).order(parent_id: :asc).page(params[:page]).per(5)
+    @pools = policy_scope(Pool).includes([profile: :user], [profile: :grade], [profile: :speciality]).order(parent_id: :asc).page(params[:page]).per(5)
     @pool_root = policy_scope(Pool).root
     
-    @select_parents = Pool.includes(:profile).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
-    @select_children = Profile.where.not(id: Pool.pluck(:profile_id)).decorate.map do |profile|
+    @select_parents = Pool.includes(:profile, [profile: :grade]).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
+    @select_children = Profile.includes(:grade).where.not(id: Pool.pluck(:profile_id)).decorate.map do |profile|
       [profile.full_name_and_grade, profile.id]
     end
   end

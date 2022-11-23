@@ -52,3 +52,10 @@ en:
           flash:
             notice: 'Succes! Snapshot is created!'
             alert: 'Snapshot is not created!'
+  admin:
+    users:
+      controller:
+        create:
+            flash:
+              notice: 'Succes! Profile is created!'
+              alert: 'Profile is not created!'  

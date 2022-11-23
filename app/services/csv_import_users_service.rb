@@ -12,7 +12,7 @@ class CsvImportUsersService
       full_name, email, role, speciality, grade = row
       find_user = User.find_by email: email.strip
 
-      if find_user == nil 
+      if find_user == nil
         user = User.create(email: email.strip, password: 'password', password_confirmation: 'password')
         user.add_role role.strip
         @message.notice += "User #{user.email} created; "
