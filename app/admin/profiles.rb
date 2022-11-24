@@ -1,6 +1,6 @@
 ActiveAdmin.register Profile do
   permit_params :first_name, :last_name, :grade_id, :speciality_id, :user_id,
-  user_attributes: [:id, :email, :password, :password_confirmation, role_ids: []],
+  user_attributes: [:id, :email, :password, :password_confirmation],
   grade_attributes: [:id, :name, :level],
   speciality_attributes: [:id, :name]
 
@@ -15,16 +15,18 @@ ActiveAdmin.register Profile do
     column(:Role_name) { |profile| profile.user.roles }
   end
 
-
   controller do
     def create
 
-      result = ::ProfileCreator.new.call(params)
+      params_validator = ProfileParamsValidator.new(params)
 
-      if result.present?
-        redirect_to admin_root_path, notice: t('admin.users.controller.create.flash.notice')
+      if params_validator.valid?
+        ProfileCreatorService.new.create_profile(params)
+        redirect_to admin_root_path
+        flash[:notice] = "Profile created !"
       else
-        redirect_to new_admin_profile_path, alert: t('admin.users.controller.create.flash.alert')
+        redirect_to new_admin_profile_path
+        flash[:error] = params_validator.errors
       end
     end
   end
@@ -34,24 +36,28 @@ ActiveAdmin.register Profile do
     f.inputs 'Profile' do
       f.input :first_name
       f.input :last_name
-      f.input :grade
-      f.input :speciality
     end
-    
-      f.inputs 'User', for: [:user, User.new] do |p|
-        p.input :email
-        p.input :roles
-        p.input :password
-        p.input :password_confirmation
-      end
 
-      f.inputs 'Speciality', for: [:speciality, f.object.speciality || Speciality.new] do |p|
+    f.inputs 'User', for: [:user, User.new] do |p|
+      p.input :email
+      p.input :password
+      p.input :password_confirmation
+      p.input :role_ids, label: 'Role', as: :select, collection: Role.all
+    end
+
+    f.inputs 'Select Speciality' do
+      f.input :speciality
+      f.inputs "Or type speciality", for: [:speciality, f.object.speciality || Speciality.new] do |p|
         p.input :name
       end
-    
-    f.inputs 'Grade', for: [:grade, f.object.grade || Grade.new] do |p|
-      p.input :name
-      p.input :level
+    end
+  
+    f.inputs 'Select Grade' do
+      f.input :grade
+      f.inputs "Or type grade", for: [:grade, f.object.grade || Grade.new] do |p|
+        p.input :name
+        p.input :level
+      end
     end
     
     f.actions

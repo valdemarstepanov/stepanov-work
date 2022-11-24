@@ -41,8 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "level", null: false
+    t.string "name"
+    t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_grades_on_name"
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
   end
 
   create_table "specialities", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_specialities_on_name"

@@ -4,31 +4,35 @@ RSpec.describe 'User', :js, type: :feature do
   let!(:admin_user) { create :admin_user }
   let!(:grade) { create :grade }
   let!(:speciality) { create :speciality }
+  let!(:user) { create :user }
 
-  describe "User tests", type: :feature do
+  xdescribe "User tests", type: :feature do
 
     scenario 'create new user' do
       sign_in(admin_user)
 
-  # Create User
+  # Create Profile
 
-      visit admin_users_path
-      click_link('New User')
+      visit admin_profiles_path
+      click_link('New Profile')
+
+      user.add_role :user
 
       within('form') do
-        find_field(name: 'user[email]').set('test@gmail.example')
-        find_field(name: 'user[password]').set('password')
-        find_field(name: 'user[password_confirmation]').set('password')
-        find_field(name: 'user[profile_attributes][first_name]').set('First Name')
-        find_field(name: 'user[profile_attributes][last_name]').set('Last Name')
-        find_field(name: 'user[profile_attributes][grade_id]').find(:option, grade.name).select_option
-        find_field(name: 'user[profile_attributes][speciality_id]').find(:option, speciality.name).select_option
+        find_field(name: 'profile[user_attributes][email]').set('test@gmail.example')
+        find_field(name: 'profile[user_attributes][password]').set('password')
+        find_field(name: 'profile[user_attributes][password_confirmation]').set('password')
+        binding.pry
+        find_field(name: 'profile[user_attributes][roles]').find(:option, roles).select_option
+        find_field(name: 'profile[first_name]').set('First Name')
+        find_field(name: 'profile[last_name]').set('Last Name')
+        find_field(name: 'profile[grade_id]').find(:option, grade.name).select_option
+        find_field(name: 'profile[speciality_id]').find(:option, speciality.name).select_option
 
-         click_on 'Create User'
+         click_on 'Create Profile'
        end
   
-      expect(page).to have_content 'User was successfully created.'
-      expect(page).to have_content 'test@gmail.example'
+      expect(page).to have_content 'Profile created'
       expect(page).to have_content grade.name
       expect(page).to have_current_path(admin_user_path(User.first))
    
