@@ -13,31 +13,44 @@ class ProfileParamsValidator
   end
 
   def validate
-
-    unless @params.dig(:profile, :grade_id).present? ||
-        @params.dig(:profile, :grade_attributes, :name).present? &&
-          @params.dig(:profile, :grade_attributes, :level).present?
-      @errors << "Grade is not selected or set"
-    end
-
-    unless @params.dig(:profile, :speciality_id).present? ||
-        @params.dig(:profile, :speciality_attributes, :name).present?
-      @errors << "Speciality is not selected or set"
-    end
-
-    unless @params.dig(:profile, :user_attributes, :email).present? &&
-        @params.dig(:profile, :user_attributes, :password).present? &&
-          @params.dig(:profile, :user_attributes, :password_confirmation).present? &&
-            @params.dig(:profile, :user_attributes, :role_ids).present?
-      @errors << "User params not set"
-    end
-
-    unless @params.dig(:profile, :first_name).present? && @params.dig(:profile, :last_name).present?
+    
+    if @params.dig(:first_name).blank? && @params.dig(:last_name).blank?
       @errors << "Profile params not set"
     end
 
-    if User.find_by(email: @params.dig(:profile, :user_attributes, :email)).present?
+    if @params.dig(:grade_id).blank?
+      grade_attributes = @params.dig(:grade_attributes)
+      grade_fields = [:name, :level]
+      
+      if grade_fields.any? { |f| grade_attributes.dig(f).blank? }
+        @errors << "Grade params are not set"
+      end
+    end
+
+    if @params.dig(:speciality_id).blank?
+      if @params.dig(:speciality_attributes, :name).blank?
+        @errors << "Speciality params are not set"
+      end
+    end
+
+    user_attributes = @params.dig(:user_attributes)
+    user_fields = [:email, :password, :password_confirmation, :role_ids]
+
+    if user_fields.any? { |f| user_attributes.dig(f).blank? }
+      @errors << "User params are not set"
+    end
+
+    user_email = @params.dig(:user_attributes, :email)
+
+    if User.find_by(email: user_email).present?
       @errors << "Email has already been taken"
+    end
+
+    password = @params.dig(:user_attributes, :password)
+    password_confirmation = @params.dig(:user_attributes, :password_confirmation)
+    
+    if password != password_confirmation
+      @errors << "Password confirmation doesn't match Password"
     end
   end
 end

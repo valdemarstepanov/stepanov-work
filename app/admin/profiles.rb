@@ -18,16 +18,22 @@ ActiveAdmin.register Profile do
   controller do
     def create
 
-      params_validator = ProfileParamsValidator.new(params)
+      params_validator = ProfileParamsValidator.new(profile_params)
 
       if params_validator.valid?
-        ProfileCreatorService.new.create_profile(params)
+        ProfileCreatorService.new.create_profile(profile_params.to_unsafe_hash)
         redirect_to admin_root_path
-        flash[:notice] = "Profile created !"
+        flash[:notice] = "Profile created!"
       else
         redirect_to new_admin_profile_path
         flash[:error] = params_validator.errors
       end
+    end
+
+    private
+
+    def profile_params
+      params.require(:profile)
     end
   end
 
