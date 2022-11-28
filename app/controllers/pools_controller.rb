@@ -1,7 +1,6 @@
 class PoolsController < BaseController
 
   def index
-
     @pools = []
     @pool_root = nil
     @select_parents = []
@@ -23,7 +22,6 @@ class PoolsController < BaseController
   end
 
   def create
-    
     params = pool_params.merge(pool_container_id: current_user.pool_container.id)
 
     @pool = Pool.new(params)
@@ -37,7 +35,6 @@ class PoolsController < BaseController
   end
 
   def destroy
-
     @pool = Pool.find(params[:id])
 
     authorize @pool, policy_class: PoolPolicy
@@ -51,7 +48,6 @@ class PoolsController < BaseController
   end
 
   def pool_graph
-
     pools = []
     if current_user.has_role? :manager
     pools = current_user.pool_container.pools.includes(:profile)
