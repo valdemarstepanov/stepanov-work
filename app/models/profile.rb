@@ -7,4 +7,5 @@ class Profile < ApplicationRecord
 
   validates :first_name, :last_name, :grade_id, :speciality_id, :user_id, presence: true
   accepts_nested_attributes_for :user, :grade, :speciality
+
 end

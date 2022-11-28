@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_25_105205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
     t.index ["name"], name: "index_grades_on_name"
   end
 
+  create_table "pool_containers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_pool_containers_on_user_id"
+  end
+
   create_table "pool_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
@@ -62,6 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_id"
+    t.bigint "pool_container_id"
+    t.index ["pool_container_id"], name: "index_pools_on_pool_container_id"
     t.index ["profile_id"], name: "index_pools_on_profile_id", unique: true
     t.index ["type"], name: "index_pools_on_type"
   end
@@ -140,6 +149,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_110210) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "pool_containers", "users", on_delete: :cascade
+  add_foreign_key "pools", "pool_containers", on_delete: :cascade
   add_foreign_key "pools", "profiles", on_delete: :cascade
   add_foreign_key "profiles", "grades"
   add_foreign_key "profiles", "specialities"

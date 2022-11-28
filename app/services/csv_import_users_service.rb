@@ -15,6 +15,11 @@ class CsvImportUsersService
       if find_user == nil
         user = User.create(email: email.strip, password: 'password', password_confirmation: 'password')
         user.add_role role.strip
+
+        if user.has_role? :manager
+          PoolContainer.create(user_id: user.id)
+        end
+
         @message.notice += "User #{user.email} created; "
         
         speciality_item = Speciality.find_or_create_by!(name: speciality.strip)
