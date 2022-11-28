@@ -6,5 +6,5 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_one :profile
-  accepts_nested_attributes_for :profile
+
 end
