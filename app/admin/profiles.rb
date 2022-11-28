@@ -24,12 +24,7 @@ ActiveAdmin.register Profile do
         profile = ProfileCreatorService.new.create_profile(profile_params.to_unsafe_hash)
         redirect_to admin_root_path
         flash[:notice] = "Profile created!"
-   
-        user = profile.user
-        
-        if user.has_role? :manager
-          PoolContainer.create(user: user)
-        end
+
       else
         redirect_to new_admin_profile_path
         flash[:error] = params_validator.errors

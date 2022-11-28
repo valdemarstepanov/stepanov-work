@@ -1,6 +1,7 @@
 class PoolsController < BaseController
 
   def index
+
     @pools = []
     @pool_root = nil
     @select_parents = []
@@ -15,7 +16,9 @@ class PoolsController < BaseController
       @select_parents = current_user.pool_container.pools.includes(profile:
         [:grade]).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
 
-      @select_children = Profile.includes(:grade).available_profile
+      @select_children = Profile.includes(:grade).available.decorate.map do |profile|
+        [profile.full_name_and_grade, profile.id]
+      end
     end
   end
 
@@ -34,6 +37,7 @@ class PoolsController < BaseController
   end
 
   def destroy
+
     @pool = Pool.find(params[:id])
 
     authorize @pool, policy_class: PoolPolicy
@@ -47,6 +51,8 @@ class PoolsController < BaseController
   end
 
   def pool_graph
+
+    pools = []
     if current_user.has_role? :manager
     pools = current_user.pool_container.pools.includes(:profile)
     else
