@@ -3,7 +3,8 @@
 <table class="shadow-lg bg-white border-separate text-left mx-auto">
   <tr>
     <th class="bg-green-200 border text-center px-6 py-3">Id</th> 
-    <th class="bg-green-200 border text-center px-6 py-3">Snapshot</th>
+    <th class="bg-green-200 border text-center px-6 py-3">Create time</th>
+    <th class="bg-green-200 border text-center px-6 py-3">Creator</th>
     <th class="bg-green-200 border text-center px-6 py-3">Check tree</th>
     <th class="bg-green-200 border text-center px-6 py-3">Delete</th> 
   </tr>
@@ -12,6 +13,7 @@
     <tr>
       <td class="border px-6 py-3"><%= snapshot.id %></td>
       <td class="border px-6 py-3"><%= snapshot.identifier %></td>
+      <td class="border px-6 py-3"><%= snapshot.user.profile.first_name %></td>
       <td class="border px-6 py-3"> 
         <%= link_to snapshot_path(snapshot), class:"text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200",
         data: { turbo_method: :get } do %>

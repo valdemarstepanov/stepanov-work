@@ -28,7 +28,7 @@ class PoolsController < BaseController
 
     authorize @pool, policy_class: PoolPolicy
     if @pool.save
-      CreateSnapshotService.new.create_snapshot(current_user)
+      snapshot_service.create_snapshot(current_user.pool_container)
       redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
     else
       redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
@@ -42,7 +42,7 @@ class PoolsController < BaseController
 
     if @pool.parent_id.present?
       @pool.destroy!
-      CreateSnapshotService.new.create_snapshot(current_user)
+      snapshot_service.create_snapshot(current_user.pool_container)
       redirect_to root_path, notice: t('controllers.pools_controller.destroy.flash.notice')
     else
       redirect_to root_path, alert: t('controllers.pools_controller.destroy.flash.alert')
@@ -66,5 +66,9 @@ class PoolsController < BaseController
 
   def pool_params
     params.require(:pool).permit(:id, :type, :profile_id, :parent_id)
+  end
+
+  def snapshot_service
+    @snaphost_service ||= SnapshotService.new
   end
 end
