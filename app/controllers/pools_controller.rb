@@ -29,6 +29,8 @@ class PoolsController < BaseController
     authorize @pool, policy_class: PoolPolicy
     if @pool.save
       redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
+
+      CreateSnapshotService.new.create_snapshot(current_user)
     else
       redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
     end

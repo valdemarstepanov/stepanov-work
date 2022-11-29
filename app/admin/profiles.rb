@@ -21,10 +21,9 @@ ActiveAdmin.register Profile do
       params_validator = ProfileParamsValidator.new(profile_params)
 
       if params_validator.valid?
-        profile = ProfileCreatorService.new.create_profile(profile_params.to_unsafe_hash)
+        ProfileCreatorService.new.create_profile(profile_params.to_unsafe_hash)
         redirect_to admin_root_path
         flash[:notice] = "Profile created!"
-
       else
         redirect_to new_admin_profile_path
         flash[:error] = params_validator.errors

@@ -27,24 +27,23 @@ class CsvImportUsersService
           if user.has_role? :manager
             PoolContainer.create!(user: user)
           end
+                  
+          @message.notice += "User #{user.email} created; "
+            
+          speciality_item = Speciality.find_or_create_by!(name: speciality.strip)
+
+          grade_arr = grade.split('/')
+          grade_name = grade_arr[0]
+          grade_level = grade_arr[1]
+          grade_item = Grade.find_or_create_by!(name: grade_name.strip, level: grade_level.strip)
+
+          full_name_arr = full_name.split(' ')
+          first_name = full_name_arr[0]
+          last_name = full_name_arr[1]
+            
+          profile = Profile.find_or_create_by!(first_name: first_name.strip, last_name: last_name.strip,
+          user_id: user.id, speciality_id: speciality_item.id, grade_id: grade_item.id)
         end
-          
-        @message.notice += "User #{user.email} created; "
-          
-        speciality_item = Speciality.find_or_create_by!(name: speciality.strip)
-
-        grade_arr = grade.split('/')
-        grade_name = grade_arr[0]
-        grade_level = grade_arr[1]
-        grade_item = Grade.find_or_create_by!(name: grade_name.strip, level: grade_level.strip)
-
-        full_name_arr = full_name.split(' ')
-        first_name = full_name_arr[0]
-        last_name = full_name_arr[1]
-          
-        profile = Profile.find_or_create_by!(first_name: first_name.strip, last_name: last_name.strip,
-        user_id: user.id, speciality_id: speciality_item.id, grade_id: grade_item.id)
-
       end
     end
   end
