@@ -3,6 +3,7 @@ class Pool < ApplicationRecord
   before_destroy :change_parent_pools
 
   belongs_to :profile
+  belongs_to :pool_container
 
   has_closure_tree
 
@@ -35,4 +36,5 @@ class Pool < ApplicationRecord
     output << "}\n"
     output.string
   end
+  
 end

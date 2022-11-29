@@ -9,7 +9,7 @@ class PoolPolicy
   end
   
   def index?
-    false
+    current_user.has_role? :manager
   end
   
   def show?

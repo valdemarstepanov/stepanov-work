@@ -11,6 +11,10 @@ class ProfileCreatorService
       role = find_role(params)
       user.add_role :"#{role.name}"
 
+      if user.has_role? :manager
+        PoolContainer.create(user: user)
+      end
+
       grade_id = params.dig(:grade_id)
       grade_attributes = params.dig(:grade_attributes)
       grade = find_grade(grade_id, grade_attributes)

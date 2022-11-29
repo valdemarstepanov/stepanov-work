@@ -1,23 +1,36 @@
 class PoolsController < BaseController
 
   def index
-    @pools = policy_scope(Pool).includes([profile: :user], [profile: :grade], [profile: :speciality]).order(parent_id: :asc).page(params[:page]).per(5)
-    @pool_root = policy_scope(Pool).root
+    @pools = []
+    @pool_root = nil
+    @select_parents = []
+    @select_children = []
+
+    if current_user.has_role? :manager || current_user.profile.pool.present?
     
-    @select_parents = Pool.includes(:profile, [profile: :grade]).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
-    @select_children = Profile.includes(:grade).where.not(id: Pool.pluck(:profile_id)).decorate.map do |profile|
-      [profile.full_name_and_grade, profile.id]
+      @pools = current_user.pool_container.pools.order(parent_id: :asc).page(params[:page]).per(5)
+        
+      @pool_root = current_user.pool_container.pools.root
+      
+      @select_parents = current_user.pool_container.pools.includes(profile:
+        [:grade]).decorate.map { |pool| [pool.full_name_and_grade, pool.id] }
+
+      @select_children = Profile.includes(:grade).available.decorate.map do |profile|
+        [profile.full_name_and_grade, profile.id]
+      end
     end
   end
 
   def create
-    @pool = Pool.create(pool_params)
-    
-    if authorize @pool, policy_class: PoolPolicy
-      @pool.save!
+    params = pool_params.merge(pool_container_id: current_user.pool_container.id)
+
+    @pool = Pool.new(params)
+
+    authorize @pool, policy_class: PoolPolicy
+    if @pool.save
       redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
     else
-      redirect_to root_path, alert: t('controllers.application_controller.user_not_authorized.flash.alert')
+      redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
     end
   end
 
@@ -35,8 +48,16 @@ class PoolsController < BaseController
   end
 
   def pool_graph
-    @pools = Pool.includes(:profile)
-    send_file ::GraphGenerator.new.call(@pools, current_user.profile.id)
+    pools = []
+    if current_user.has_role? :manager
+    pools = current_user.pool_container.pools.includes(:profile)
+    else
+      pool = current_user.profile.pool
+      if pool.present?
+        pools = pool.pool_container.pools
+      end
+    end
+    send_file ::GraphGenerator.new.call(pools, current_user.profile.id)
   end
 
   private
