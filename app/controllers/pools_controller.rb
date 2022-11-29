@@ -28,9 +28,8 @@ class PoolsController < BaseController
 
     authorize @pool, policy_class: PoolPolicy
     if @pool.save
-      redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
-
       CreateSnapshotService.new.create_snapshot(current_user)
+      redirect_to root_path, notice: t('controllers.pools_controller.create.flash.notice')
     else
       redirect_to root_path, alert: t('controllers.pools_controller.create.flash.alert')
     end
@@ -43,6 +42,7 @@ class PoolsController < BaseController
 
     if @pool.parent_id.present?
       @pool.destroy!
+      CreateSnapshotService.new.create_snapshot(current_user)
       redirect_to root_path, notice: t('controllers.pools_controller.destroy.flash.notice')
     else
       redirect_to root_path, alert: t('controllers.pools_controller.destroy.flash.alert')
@@ -52,7 +52,7 @@ class PoolsController < BaseController
   def pool_graph
     pools = []
     if current_user.has_role? :manager
-    pools = current_user.pool_container.pools.includes(:profile)
+      pools = current_user.pool_container.pools.includes(:profile)
     else
       pool = current_user.profile.pool
       if pool.present?
