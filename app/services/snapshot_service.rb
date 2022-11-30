@@ -1,4 +1,5 @@
 class SnapshotService
+  
   MINIMUM_NUMBERS_OF_POOL = 2
 
   def create_snapshot(pool_container)

@@ -7,17 +7,12 @@ class CsvImportUsersService
   
   def convert_save(csv_file)
     @message = OpenStruct.new(error: '', notice: '')
-      
+    
     CSV.foreach(csv_file.path) do |row|
       full_name, email, role, speciality, grade = row
-      find_user = User.find_by email: email.strip
+      find_user = User.find_by(email: email.strip)
 
-      if find_user.present?
-
-        user = find_user
-        @message.error += "User #{user.email} alredy exist; "
-
-      else
+      if find_user.blank?
 
         ActiveRecord::Base.transaction do
           
@@ -27,8 +22,6 @@ class CsvImportUsersService
           if user.has_role? :manager
             PoolContainer.create!(user: user)
           end
-
-          @message.notice += "User #{user.email} created; "
             
           speciality_item = Speciality.find_or_create_by!(name: speciality.strip)
 
@@ -43,7 +36,12 @@ class CsvImportUsersService
 
           Profile.find_or_create_by!(first_name: first_name.strip, last_name: last_name.strip,
           user_id: user.id, speciality_id: speciality_item.id, grade_id: grade_item.id)
+
+          @message.notice += "User #{user.email} created; "
         end
+
+      else
+        @message.error += "User #{find_user.email} alredy exist; "
       end
     end
   end
