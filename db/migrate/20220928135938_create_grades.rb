@@ -1,0 +1,13 @@
+class CreateGrades < ActiveRecord::Migration[7.0]
+  def change
+    create_table :grades do |t|
+      t.string :name
+      t.string :level
+      
+      t.timestamps
+    end
+   
+    add_index :grades, :name
+
+  end
+end
